@@ -6,29 +6,46 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">    
     
     <h:head>
-        <title>Facelet Title</title>
+        <title>Red de Concesionarios</title>
     </h:head>
     <h:body>
+           <h:form>
+            <p:messages autoUpdate="true"/>
+            <h:panelGrid columns="2">
+
+                <p:outputLabel for="txtUsuario" value="Usuario"/>
+                <p:inputText id="txtUsuario" value="#{indexManagedBean.concesionario.usuario}" required="true"/>    
+
+                <p:outputLabel for="txtPassword" value="Contraseña"/>
+                <p:password id="txtPassword" value="#{indexManagedBean.concesionario.contraseña}" required="true"/>    
+                <h:column/> 
+                <p:commandButton icon="fa-car" value="Iniciar Sesión" action="#{indexManagedBean.iniciarSesion()}"/>
+
+            </h:panelGrid>
+
+
+        </h:form>
+        
         <f:view>
 
 
             <h:form>
-                <h1><h:outputText value="Registrar Concesionario"/></h1>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="Nit:" for="nit" />
-                    <h:inputText id="nit" value="#{concesionarioManagedBean.concesionario.nit}" title="Nit" required="true" requiredMessage="The Nit field is required."/>
-                    <h:outputLabel value="Nombre:" for="nombre" />
-                    <h:inputText id="nombre" value="#{concesionarioManagedBean.concesionario.nombre}" title="Nombre" required="true" requiredMessage="The Nombre field is required."/>
-                    <h:outputLabel value="Telefono:" for="telefono" />
-                    <h:inputText id="telefono" value="#{concesionarioManagedBean.concesionario.telefono}" title="Telefono" required="true" requiredMessage="The Telefono field is required."/>
-                    <h:outputLabel value="Direccion:" for="direccion" />
-                    <h:inputText id="direccion" value="#{concesionarioManagedBean.concesionario.direccion}" title="Direccion" required="true" requiredMessage="The Direccion field is required."/>
-                    <h:outputLabel value="Usuario:" for="usuario" />
-                    <h:inputText id="usuario" value="#{concesionarioManagedBean.concesionario.usuario}" title="Usuario" required="true" requiredMessage="The Usuario field is required."/>
-                    <h:outputLabel value="Contraseña:" for="contraseña" />
-                    <h:inputText id="contraseña" value="#{concesionarioManagedBean.concesionario.contraseña}" title="Contraseña" required="true" requiredMessage="The Contraseña field is required."/>
-                    <h:commandButton value="Registrar" actionListener="#{concesionarioManagedBean.registrarConcesionario()}"/>
-                </h:panelGrid>
+                <h1><h:outputText value="Registrar concesionario"/></h1>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nit:" for="nit" />
+                    <p:inputText id="nit" value="#{concesionarioManagedBean.concesionario.nit}" title="Nit" required="true" requiredMessage="The Nit field is required."/>
+                    <p:outputLabel value="Nombre:" for="nombre" />
+                    <p:inputText id="nombre" value="#{concesionarioManagedBean.concesionario.nombre}" title="Nombre" required="true" requiredMessage="The Nombre field is required."/>
+                    <p:outputLabel value="Telefono:" for="telefono" />
+                    <p:inputText id="telefono" value="#{concesionarioManagedBean.concesionario.telefono}" title="Telefono" required="true" requiredMessage="The Telefono field is required."/>
+                    <p:outputLabel value="Direccion:" for="direccion" />
+                    <p:inputText id="direccion" value="#{concesionarioManagedBean.concesionario.direccion}" title="Direccion" required="true" requiredMessage="The Direccion field is required."/>
+                    <p:outputLabel value="Usuario:" for="usuario" />
+                    <p:inputText id="usuario" value="#{concesionarioManagedBean.concesionario.usuario}" title="Usuario" required="true" requiredMessage="The Usuario field is required."/>
+                    <p:outputLabel value="Contraseña:" for="contraseña" />
+                    <p:inputText id="contraseña" value="#{concesionarioManagedBean.concesionario.contraseña}" title="Contraseña" required="true" requiredMessage="The Contraseña field is required."/>
+                </p:panelGrid>
+                <p:commandButton value="Registrar" actionListener="#{concesionarioManagedBean.registrarConcesionario()}"/>
             </h:form>
         </f:view>
 

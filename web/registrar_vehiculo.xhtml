@@ -9,18 +9,19 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">  
-    
+
     <h:head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
-    
+
     <h:body>
+
         <f:view>
 
 
-            <h:form>
-            <h1><h:outputText value="Registrar Vehiculo"/></h1>
+            <h:form id="formularioVehiculo">
+                <h1><h:outputText value="Registrar Vehiculo"/></h1>
 
                 <p:panelGrid columns="2">
 
@@ -37,13 +38,15 @@ and open the template in the editor.
                         <!-- TODO: update below reference to list of available items-->
                         <f:selectItems value="#{concesionarioManagedBean.listarConcesionario()}" var="listaConc" itemLabel="#{listaConc.nombre}"/>
                     </p:selectOneMenu>
-                                   <p:commandButton value="Registrar" actionListener="#{vehiculoManagedBean.registrarVehiculo()}"/>
+                    <p:commandButton value="Registrar" update=":formularioVehiculo" actionListener="#{vehiculoManagedBean.registrarVehiculo()}"/>
 
                 </p:panelGrid>
-            
+
 
             </h:form>
         </f:view>
+
+      
 
 
     </h:body>

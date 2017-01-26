@@ -30,4 +30,6 @@ public interface ConcesionarioFacadeLocal {
 
     int count();
     
+    Concesionario iniciarSesion(Concesionario con);
+    
 }

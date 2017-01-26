@@ -21,50 +21,52 @@ import javax.enterprise.context.RequestScoped;
  */
 @Named(value = "vehiculoManagedBean")
 @RequestScoped
-public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<Vehiculo>{
+public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<Vehiculo> {
 
- private Vehiculo vehiculo;
- @EJB
- private VehiculoFacadeLocal vehiculofl;
- 
+    private Vehiculo vehiculo;
+    @EJB
+    private VehiculoFacadeLocal vehiculofl;
+
     public VehiculoManagedBean() {
     }
-    
+
     @PostConstruct
- public void init(){
- 
- vehiculo = new Vehiculo();
- 
- }   
+    public void init() {
 
-    @Override
-    public Vehiculo getObjectByKey(Integer llave) {
-        return vehiculofl.find(llave);
+        vehiculo = new Vehiculo();
+
     }
-
-    public Vehiculo getVehiculo() {
+ public Vehiculo getVehiculo() {
         return vehiculo;
     }
 
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
- 
- public void registrarVehiculo(){
- 
-     vehiculofl.create(vehiculo);
-     
- }
- 
- public void eliminarVehiculo(Vehiculo v){
- 
- vehiculofl.remove(v);
- 
- }
+    
+    @Override
+    public Vehiculo getObjectByKey(Integer llave) {
+        return vehiculofl.find(llave);
+    }
 
-public List<Vehiculo> listarVehiculo(){
+   
 
-return vehiculofl.findAll();
+    public void registrarVehiculo() {
 
-}
+        vehiculofl.create(vehiculo);
+
+    }
+
+    
+    public List<Vehiculo> listarVehiculo() {
+
+        return vehiculofl.findAll();
+
+    }
+    
+    public void eliminarVehiculo(Vehiculo ve) {
+
+        vehiculofl.remove(ve);
+
+    }
 }

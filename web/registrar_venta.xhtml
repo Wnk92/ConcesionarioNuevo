@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">    
+   
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    
+    <body>
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Create/Edit"/></h1>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Fecha:" for="fecha" />
+                    <p:inputText id="fecha" value="#{ventaManagedBean.venta.fecha}" title="Fecha" required="true" requiredMessage="The Fecha field is required.">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </p:inputText>
+                    <p:outputLabel value="IdCliente:" for="idCliente" />
+                    <p:selectOneMenu id="idCliente" value="#{ventaManagedBean.venta.idCliente}" required="true" requiredMessage="The IdCliente field is required.">
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{clienteManagedBean.listarCliente()}" var="lista" itemLabel="#{lista.nombre}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="IdVehiculo:" for="idVehiculo" />
+                    <p:selectOneMenu id="idVehiculo" value="#{ventaManagedBean.venta.idVehiculo}" required="true" requiredMessage="The IdVehiculo field is required.">
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{vehiculoManagedBean.listarVehiculo()}" var="listaVeh" itemLabel="#{listaVeh.nombre}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton value="Registrar" actionListener="#{ventaManagedBean.registrarVenta()}"/>
+                </p:panelGrid>
+            </h:form>
+        </f:view>
+
+    </body>
+</html>

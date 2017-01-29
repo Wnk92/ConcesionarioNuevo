@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -39,7 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Vehiculo.findByMarca", query = "SELECT v FROM Vehiculo v WHERE v.marca = :marca"),
     @NamedQuery(name = "Vehiculo.findByModelo", query = "SELECT v FROM Vehiculo v WHERE v.modelo = :modelo"),
     @NamedQuery(name = "Vehiculo.findByNombre", query = "SELECT v FROM Vehiculo v WHERE v.nombre = :nombre"),
+    @NamedQuery(name = "Vehiculo.menorPrecio", query = "SELECT v FROM Vehiculo V WHERE v.precio < :precio"),
     @NamedQuery(name = "Vehiculo.findByPrecio", query = "SELECT v FROM Vehiculo v WHERE v.precio = :precio")})
+
 public class Vehiculo implements Serializable, DTO {
 
     private static final long serialVersionUID = 1L;

@@ -9,75 +9,78 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">    
-   
+
     <h:head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="#{indexManagedBean.verificarSesion()}"/>
+
     </h:head>
-    
+
     <h:body>
         <h:form>
-            
-               <p:tabMenu activeIndex="#{param.i}">
-            <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
-                <f:param name="i" value="0"/>
-            </p:menuitem>
 
-            <p:menuitem value="Registrar vehiculo" outcome="registrar_vehiculo" icon="ui-icon-car">
-                <f:param name="i" value="1" />
-            </p:menuitem>
+            <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
+                <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
 
-            <p:menuitem value="Registrar cliente" outcome="registrar_cliente" icon="ui-icon-person" >
-                <f:param name="i" value="2"/>
-            </p:menuitem>
+                <p:menuitem value="Registrar vehiculo" outcome="registrar_vehiculo" icon="ui-icon-car">
+                    <f:param name="i" value="1" />
+                </p:menuitem>
 
-            <p:menuitem value="Registrar venta" outcome="registrar_venta" icon="ui-icon-document" >
-                <f:param name="i" value="3"/>
-            </p:menuitem>
+                <p:menuitem value="Registrar cliente" outcome="registrar_cliente" icon="ui-icon-person" >
+                    <f:param name="i" value="2"/>
+                </p:menuitem>
 
-             <p:menuitem value="Consultas" outcome="registrar_venta" icon=" ui-icon-circle-zoomout" >
-                <f:param name="i" value="4"/>
-            </p:menuitem>
-            
-            
-             <p:menuitem value="Cerrar sesión" outcome="index" icon=" ui-icon-close" >
-                <f:param name="i" value="5"/>
-            </p:menuitem>
+                <p:menuitem value="Registrar venta" outcome="registrar_venta" icon="ui-icon-document" >
+                    <f:param name="i" value="3"/>
+                </p:menuitem>
 
-        </p:tabMenu>
+                <p:menuitem value="Consultas" outcome="consultas" icon=" ui-icon-circle-zoomout" >
+                    <f:param name="i" value="4"/>
+                </p:menuitem>
+
+
+                <p:menuitem value="Cerrar sesión" outcome="index" icon=" ui-icon-close" >
+                    <f:param name="i" value="5"/>
+                </p:menuitem>
+
+            </p:tabMenu>
         </h:form>
-        
-     
-        <f:view>
 
-            <h:form>
-                  <p:messages autoUpdate="true"/>
-                <h1><h:outputText value="Registrar Ventas"/></h1>
-                
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Fecha:" for="fecha" />
-                    <p:inputText id="fecha" value="#{ventaManagedBean.venta.fecha}" title="Fecha" required="true" requiredMessage="Campo requerido">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                    </p:inputText>
-                    <p:outputLabel value="IdCliente:" for="idCliente" />
-                    <p:selectOneMenu id="idCliente" value="#{ventaManagedBean.venta.idCliente}" required="true" requiredMessage="Campo requerido">
+
+
+        <h:form id="FormularioVenta" style="font-family: monospace; font-size: 15px; padding-top: 20px;  padding-right: 1050px; padding-bottom: 100px; position: absolute;">
+            <p:growl id="growl" sticky="true" showSummary="true" showDetail="true" /> 
+
+            <p:fieldset legend="Formulario de registro de ventas" style="font-family: monospace; height: 300px;">
+
+
+                <h:panelGrid >
+                    <p:outputLabel value="Fecha de compra:" for="fecha" style="font-family: monospace;" />
+                    <p:calendar locale="es" id="fecha" value="#{ventaManagedBean.venta.fecha}" title="Fecha" required="true" requiredMessage="Campo requerido"/>
+
+                    <p:outputLabel value="Nombre del comprador:" for="idCliente" style="font-family: monospace;" />
+                    <p:selectOneMenu style="font-family: monospace;" id="idCliente" value="#{ventaManagedBean.venta.idCliente}" required="true" requiredMessage="Campo requerido">
                         <!-- TODO: update below reference to list of available items-->
                         <f:selectItems value="#{clienteManagedBean.listarCliente()}" var="lista" itemLabel="#{lista.nombre}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="IdVehiculo:" for="idVehiculo" />
-                    <p:selectOneMenu id="idVehiculo" value="#{ventaManagedBean.venta.idVehiculo}" required="true" requiredMessage="Campo requerido">
+                    <p:outputLabel value="Nombre del vehiculo:" for="idVehiculo" style="font-family: monospace;"/>
+                    <p:selectOneMenu style="font-family: monospace;" id="idVehiculo" value="#{ventaManagedBean.venta.idVehiculo}" required="true" requiredMessage="Campo requerido">
                         <!-- TODO: update below reference to list of available items-->
                         <f:selectItems value="#{vehiculoManagedBean.listarVehiculo()}" var="listaVeh" itemLabel="#{listaVeh.nombre}"/>
                     </p:selectOneMenu>
-                    <p:commandButton value="Registrar" actionListener="#{ventaManagedBean.registrarVenta()}"/>
-                </p:panelGrid>
-            </h:form>
-        </f:view>
+                    <p:commandButton icon="ui-icon-check" style="font-family: monospace;" value="Registrar" actionListener="#{ventaManagedBean.registrarVenta()}" update="growl, :FormTabVentas"/>
+                </h:panelGrid>
+            </p:fieldset>
+        </h:form>
+        
         <f:view>
 
-            <h:form>
-                 <h:commandLink>
-                    <p:graphicImage url="./../Resources/img/pdf.jpg" width="30"/>
+            <h:form style="padding-left:1150px; padding-top:57px; position: absolute;">
+                <h:commandLink>
+                    <p:graphicImage url="./../Resources/img/pdf.jpg" width="30" />
                     <p:dataExporter type="pdf" target="tablaVentas" fileName="ListadoDeClientes"/>
                 </h:commandLink>
 
@@ -85,38 +88,41 @@ and open the template in the editor.
                     <p:graphicImage url="./../Resources/img/xls.png" width="30"/>
                     <p:dataExporter type="xls" target="tablaVentas" fileName="ListadoDeClientes"/>
                 </h:commandLink>
-                
-                <h1><h:outputText value="Listado de ventas realizadas"/></h1>
-                <p:dataTable value="#{ventaManagedBean.listarVenta()}" var="item" id="tablaVentas">
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="IdVenta"/>
-                        </f:facet>
-                        <h:outputText value="#{item.idVenta}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Fecha"/>
-                        </f:facet>
-                        <h:outputText value="#{item.fecha}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="IdCliente"/>
-                        </f:facet>
-                        <h:outputText value="#{item.idCliente}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="IdVehiculo"/>
-                        </f:facet>
-                        <h:outputText value="#{item.idVehiculo}"/>
-                    </p:column>
-                </p:dataTable>
+            </h:form>
+
+            <h:form style="padding-left: 350px; padding-top: 35px;" id="FormTabVentas">
+                <p:fieldset legend="Listado de ventas realizadas" style=" font-size: 17px; font-family:monospace; 
+                            text-align: center;">
+
+                    <p:dataTable style="font-family: monospace;" value="#{ventaManagedBean.listarVenta()}" var="item" id="tablaVentas">
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fecha"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Documento"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCliente}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="IdVehiculo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idVehiculo}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:fieldset>
             </h:form>
         </f:view>
-
+        <h:outputScript library="js"  name="spanishLocale"/>
     </h:body>
+
+
 </html>

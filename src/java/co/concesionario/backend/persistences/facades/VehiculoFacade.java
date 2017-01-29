@@ -6,6 +6,7 @@
 package co.concesionario.backend.persistences.facades;
 
 import co.concesionario.backend.persistences.entities.Vehiculo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +29,10 @@ public class VehiculoFacade extends AbstractFacade<Vehiculo> implements Vehiculo
     public VehiculoFacade() {
         super(Vehiculo.class);
     }
+
+    @Override
+    public List<Vehiculo> consultaMenorPrecio(int precio) {
+return em.createNamedQuery("Vehiculo.menorPrecio").setParameter("precio", precio).getResultList();
+        }
     
 }

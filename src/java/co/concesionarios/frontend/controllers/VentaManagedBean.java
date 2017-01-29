@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -53,8 +55,14 @@ public class VentaManagedBean implements Serializable, InterfaceManagedBean<Vent
     
     public void registrarVenta(){
     
-        ventafl.create(venta);
+         try {
+            
+            ventafl.create(venta);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"","Venta registrada con éxito"));
         
+        } catch (Exception e) {
+       
+        }
     }
     
     public void eliminarVenta(Venta v){

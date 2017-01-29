@@ -13,19 +13,23 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author camila
  */
 @Named(value = "vehiculoManagedBean")
-@RequestScoped
+@ViewScoped
 public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<Vehiculo> {
 
     private Vehiculo vehiculo;
     @EJB
     private VehiculoFacadeLocal vehiculofl;
+    private int precio;
+    private List<Vehiculo> consulMenorPrecio;
 
     public VehiculoManagedBean() {
     }
@@ -43,6 +47,23 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public List<Vehiculo> getMenorPrecio() {
+        return consulMenorPrecio;
+    }
+
+    public void setMenorPrecio(List<Vehiculo> menorPrecio) {
+        this.consulMenorPrecio = menorPrecio;
+    }
+    
     
     @Override
     public Vehiculo getObjectByKey(Integer llave) {
@@ -53,7 +74,16 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
 
     public void registrarVehiculo() {
 
-        vehiculofl.create(vehiculo);
+        try {
+            
+            vehiculofl.create(vehiculo);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"","Vehículo registrado con éxito"));
+        
+        } catch (Exception e) {
+       
+        }
+             
+       
 
     }
 
@@ -68,5 +98,11 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
 
         vehiculofl.remove(ve);
 
+    }
+    
+    public void menorPrecio(){
+    
+   consulMenorPrecio = vehiculofl.consultaMenorPrecio(precio);
+        
     }
 }

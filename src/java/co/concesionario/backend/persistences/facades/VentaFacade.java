@@ -29,4 +29,5 @@ public class VentaFacade extends AbstractFacade<Venta> implements VentaFacadeLoc
         super(Venta.class);
     }
     
+    
 }

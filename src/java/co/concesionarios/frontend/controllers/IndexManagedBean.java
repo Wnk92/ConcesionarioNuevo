@@ -12,8 +12,9 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+
 import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -21,7 +22,7 @@ import javax.faces.context.FacesContext;
  * @author camila
  */
 @Named(value = "indexManagedBean")
-@RequestScoped
+@ViewScoped
 public class IndexManagedBean implements Serializable {
 
     private Concesionario concesionario;
@@ -54,7 +55,7 @@ public class IndexManagedBean implements Serializable {
         try {
            con = concesionariofl.iniciarSesion(concesionario);
             if (con != null){
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("concesionarios",con);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("concesionario",con);
             redireccion = "lista_vehiculos";
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Aviso","Valores Incorrectos"));
@@ -67,6 +68,26 @@ public class IndexManagedBean implements Serializable {
     return redireccion;
     
           }
+          
+          public void verificarSesion(){
+          
+              try {
+                  FacesContext context = FacesContext.getCurrentInstance();
+                  
+                  Concesionario con = (Concesionario)context.getExternalContext().getSessionMap().get("concesionario");
+                if (con == null)
+                {context.getExternalContext().redirect("permisos.xhtml");}
+                  
+              } catch (Exception e) {
+              }
+          
+          }
     
+          public void cerrarSesion(){
+          
+             
+              FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+          
+          }
     }
 

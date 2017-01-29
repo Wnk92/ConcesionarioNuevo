@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -51,8 +53,15 @@ private ClienteFacadeLocal clientefl;
     }
   
     public void registrarCliente(){
+     try {
+            
+            clientefl.create(cliente);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"","Cliente registrado con éxito"));
+        
+        } catch (Exception e) {
+       
+        }
     
-    clientefl.create(cliente);
         
     }
     

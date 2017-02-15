@@ -6,10 +6,12 @@
 package co.concesionarios.frontend.controllers;
 
 import co.concesionario.backend.persistences.entities.Venta;
-import co.concesionario.backend.persistences.entities.Venta_;
+import co.concesionario.backend.persistences.entities.Vehiculo;
 import co.concesionario.backend.persistences.facades.VentaFacadeLocal;
 import co.concesionarios.frontend.utilities.converter.InterfaceManagedBean;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -17,6 +19,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -31,7 +34,9 @@ public class VentaManagedBean implements Serializable, InterfaceManagedBean<Vent
     @EJB
     private VentaFacadeLocal ventafl;
     private List<Venta> masVendido;
-    private int idVehiculo;
+    private Vehiculo vehiculo;
+    @Inject
+    private IndexManagedBean ven;
 
     public VentaManagedBean() {
     }
@@ -54,10 +59,44 @@ public class VentaManagedBean implements Serializable, InterfaceManagedBean<Vent
         this.venta = venta;
     }
 
+    public List<Venta> getMasVendido() {
+        return masVendido;
+    }
+
+    public void setMasVendido(List<Venta> masVendido) {
+        this.masVendido = masVendido;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public IndexManagedBean getVen() {
+        return ven;
+    }
+
+    public void setVen(IndexManagedBean ven) {
+        this.ven = ven;
+    }
+
+    public SessionManagedBean getInd() {
+        return ind;
+    }
+
+    public void setInd(SessionManagedBean ind) {
+        this.ind = ind;
+    }
+
+   
+
     public void registrarVenta() {
 
         try {
-
+            venta.setFecha(new Date());
             ventafl.create(venta);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Venta registrada con éxito"));
 
@@ -78,12 +117,68 @@ public class VentaManagedBean implements Serializable, InterfaceManagedBean<Vent
 
     }
 
-
-    public List<Venta> getMasVendido() {
-        return masVendido;
+   
+    public String mayorVenta() {
+        String v = null;
+        String a = null;
+        try {
+            for (Venta m : listarVenta()) {
+                v = v + " " + m.getIdVehiculo().getNombre();
+            }
+            a = repetido(v);
+            return a;
+        } catch (Exception e) {
+            return a;
+        }
     }
 
-    public void setMasVendido(List<Venta> masVendido) {
-        this.masVendido = masVendido;
+    public String repetido(String vehiculo) {
+
+        String palabras[] = vehiculo.split(" ");
+        String palabrasA[] = vehiculo.split(" ");
+
+        int cantidad = palabras.length;
+        String resultado = "";
+        int contadorMasRespe = 0;
+
+        for (int i = 0; i < cantidad; i++) {
+            int contador = 0;
+            String palabra = palabras[i];
+
+            for (int j = 0; j < cantidad; j++) {
+                if (palabra.equalsIgnoreCase(palabrasA[j])) {
+                    contador++;
+                    palabras[j] = "";
+                }
+            }
+            if ((contador > 1) && (contador > contadorMasRespe)) {
+                resultado = palabra;
+                contadorMasRespe = contador;
+                System.out.print(palabras[i]);
+            } else if ((contador > 1) && (contador == contadorMasRespe)) {
+                resultado += " " + palabra;
+            }
+        }
+        if (resultado == "") {
+            resultado = " Solo se encuantra una venta ";
+        }
+        return resultado;
+    }
+
+
+       @Inject private SessionManagedBean ind;
+
+    public SessionManagedBean getInde() {
+        return ind;
+    }
+
+    public List<Venta> venrVentaConcesionario() {
+        List<Venta> l = new ArrayList<>();
+        for (Venta v : listarVenta()) {
+            if(v.getIdConcesionario().equals(ind.getVent())) {
+                l.add(v);
+            }
+        }
+        return l;
     }
 }

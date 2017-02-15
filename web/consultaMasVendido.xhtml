@@ -17,7 +17,7 @@ and open the template in the editor.
 
     <h:body style="background-color: #CECEF6;">
 
-       
+
         <h:form>
             <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
                 <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
@@ -46,16 +46,17 @@ and open the template in the editor.
 
             </p:tabMenu>
         </h:form>
+        <br/>
+        <br/>
 
-
-        <p:fieldset style="background-color: #E0E0F8; font-size: 18px; font-family: monospace;" legend="">
+        <p:fieldset style="background-color: #E0E0F8; font-size: 18px; font-family: monospace;" legend="Nuestros autos más vendidos">
 
             <h:form>
 
                 <p:column>
 
 
-                    <h:outputText value="#{buscarManagedBean.masVendido()}"/>
+                    <h:outputText value="#{ventaManagedBean.mayorVenta()}"/>
 
                 </p:column>
 
@@ -65,6 +66,6 @@ and open the template in the editor.
         </p:fieldset>
 
         <br/>
-       
+
     </h:body>
 </html>

@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Concesionario.findByContrase\u00f1a", query = "SELECT c FROM Concesionario c WHERE c.contrase\u00f1a = :contrase\u00f1a")})
 public class Concesionario implements Serializable, DTO {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idConcesionario", fetch = FetchType.EAGER)
+    private List<Venta> ventaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -174,6 +177,15 @@ public class Concesionario implements Serializable, DTO {
     @Override
     public String ObtenerLlavePrimaria() {
         return nit.toString();
+    }
+
+    @XmlTransient
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
     }
     
 }

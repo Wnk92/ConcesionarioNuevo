@@ -9,6 +9,7 @@ import co.concesionario.backend.persistences.entities.Vehiculo;
 import co.concesionario.backend.persistences.facades.VehiculoFacadeLocal;
 import co.concesionarios.frontend.utilities.converter.InterfaceManagedBean;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,6 +17,7 @@ import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -30,6 +32,8 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
     private VehiculoFacadeLocal vehiculofl;
     private int precio;
     private List<Vehiculo> pruebaCon;
+    @Inject
+    private IndexManagedBean vehi;
 
     public VehiculoManagedBean() {
     }
@@ -49,6 +53,16 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
         this.vehiculo = vehiculo;
     }
 
+    public IndexManagedBean getVehi() {
+        return vehi;
+    }
+
+    public void setVehi(IndexManagedBean vehi) {
+        this.vehi = vehi;
+    }
+    
+    
+    
     public int getPrecio() {
         return precio;
     }
@@ -65,7 +79,6 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
         this.pruebaCon = pruebaCon;
     }
 
-    
     @Override
     public Vehiculo getObjectByKey(Integer llave) {
         return vehiculofl.find(llave);
@@ -95,11 +108,32 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
         vehiculofl.remove(ve);
 
     }
-    public void consultarPrecio(){
+
+    public void consultarPrecio() {
 
         pruebaCon = vehiculofl.consultaVehiculo(precio);
 
     }
 
+    @Inject private SessionManagedBean ind;
+
+    public SessionManagedBean getInd() {
+        return ind;
+    }
+    
+    public List<Vehiculo> verVehiculoConcesionario() {
+
+        List<Vehiculo> listavehiculo = new ArrayList<>();
+        for (Vehiculo v : listarVehiculo()) {
+            if (v.getCodigoConcesionario().equals(ind.getConc())) {
+                listavehiculo.add(v);
+            }
+
+        }
+        return listavehiculo;
+                    
+                    
+                    
+    }
 
 }

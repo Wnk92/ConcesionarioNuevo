@@ -37,6 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Venta.findByFecha", query = "SELECT v FROM Venta v WHERE v.fecha = :fecha")})
 public class Venta implements Serializable, DTO {
 
+    @JoinColumn(name = "id_concesionario", referencedColumnName = "nit")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Concesionario idConcesionario;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -106,6 +110,25 @@ public class Venta implements Serializable, DTO {
         return hash;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -128,5 +151,14 @@ public class Venta implements Serializable, DTO {
     public String ObtenerLlavePrimaria() {
         return idVenta.toString();
     }
+
+    public Concesionario getIdConcesionario() {
+        return idConcesionario;
+    }
+
+    public void setIdConcesionario(Concesionario idConcesionario) {
+        this.idConcesionario = idConcesionario;
+    }
+    
     
 }

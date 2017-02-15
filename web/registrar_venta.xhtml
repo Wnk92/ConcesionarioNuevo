@@ -1,5 +1,4 @@
 
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -57,19 +56,25 @@ and open the template in the editor.
 
 
                 <h:panelGrid >
-                    <p:outputLabel value="Fecha de compra:" for="fecha" style="font-family: monospace;" />
-                    <p:calendar locale="es" id="fecha" value="#{ventaManagedBean.venta.fecha}" title="Fecha" required="true" requiredMessage="Campo requerido"/>
-
+                   
                     <p:outputLabel value="Nombre del comprador:" for="idCliente" style="font-family: monospace;" />
                     <p:selectOneMenu style="font-family: monospace;" id="idCliente" value="#{ventaManagedBean.venta.idCliente}" required="true" requiredMessage="Campo requerido">
                         <!-- TODO: update below reference to list of available items-->
                         <f:selectItems value="#{clienteManagedBean.listarCliente()}" var="lista" itemLabel="#{lista.nombre}"/>
                     </p:selectOneMenu>
+                   
                     <p:outputLabel value="Nombre del vehiculo:" for="idVehiculo" style="font-family: monospace;"/>
                     <p:selectOneMenu style="font-family: monospace;" id="idVehiculo" value="#{ventaManagedBean.venta.idVehiculo}" required="true" requiredMessage="Campo requerido">
                         <!-- TODO: update below reference to list of available items-->
                         <f:selectItems value="#{vehiculoManagedBean.listarVehiculo()}" var="listaVeh" itemLabel="#{listaVeh.nombre}"/>
                     </p:selectOneMenu>
+                    
+                     <p:outputLabel value="Nombre del vehiculo:" for="idVehiculo" style="font-family: monospace;"/>
+                     <p:selectOneMenu style="font-family: monospace;" id="idConcesionario" value="#{ventaManagedBean.venta.idConcesionario}" required="true" requiredMessage="Campo requerido">
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{concesionarioManagedBean.listarConcesionario()}" var="listaVeh" itemLabel="#{listaVeh.nombre}"/>
+                    </p:selectOneMenu>
+                    
                     <p:commandButton icon="ui-icon-check" style="font-family: monospace;" value="Registrar" actionListener="#{ventaManagedBean.registrarVenta()}" update="growl, :FormTabVentas"/>
                 </h:panelGrid>
             </p:fieldset>
@@ -91,9 +96,9 @@ and open the template in the editor.
 
            
                 <p:fieldset legend="Listado de ventas realizadas" style=" font-size: 17px; font-family:monospace; 
-                            text-align: center; background-color: #E0E0F8;">
+                            text-align: center; background-color: #E0E0F8; position: absolute;">
 
-                    <p:dataTable style="font-family: monospace;" value="#{ventaManagedBean.listarVenta()}" var="item" id="tablaVentas">
+                    <p:dataTable style="font-family: monospace;" value="#{ventaManagedBean.venrVentaConcesionario}" var="item" id="tablaVentas">
 
                         <p:column>
                             <f:facet name="header">
@@ -103,17 +108,26 @@ and open the template in the editor.
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Nombre del comprador"/>
                             </f:facet>
                             <h:outputText value="#{item.idCliente.nombre}"/>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Nombre"/>
                             </f:facet>
                             <h:outputText value="#{item.idVehiculo.nombre}"/>
+                        </p:column>
+                         
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Concesionario"/>
+                            </f:facet>
+                             <h:outputText value="#{item.idConcesionario.nombre}"/>
                         </p:column>
                     </p:dataTable>
 

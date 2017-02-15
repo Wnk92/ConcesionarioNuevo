@@ -57,7 +57,7 @@
 
                 <p:fieldset legend="Listado de vehículos" style="background-color: #E0E0F8; font-family:monospace; font-size: 25px; text-align: center;">
 
-                    <p:dataTable emptyMessage="Sin coincidencias" filteredValue="#{buscarManagedBean.filtroVehiculo}" value="#{vehiculoManagedBean.listarVehiculo()}" var="item" id="tablaVehiculos" style="width:1100px; padding-left:90px; font-family: initial; font-size: 20px;">
+                    <p:dataTable value="#{vehiculoManagedBean.verVehiculoConcesionario()}" var="item" id="tablaVehiculos" style="width:1100px; padding-left:90px; font-family: initial; font-size: 20px;">
 
                         <p:column filterBy="#{item.marca}" filterMatchMode="contains">
                             <f:facet name="header">
@@ -85,6 +85,12 @@
                                 <h:outputText value="Precio"/>
                             </f:facet>
                             <h:outputText value="#{item.precio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Concesionario"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoConcesionario.nombre}"/>
                         </p:column>
 
                     </p:dataTable>

@@ -91,7 +91,7 @@ and open the template in the editor.
 
 
 
-                <p:fieldset legend="Listado de clientes" style="font-family: monospace; font-size: 18px; padding-bottom: 100px; text-align: center; background-color: #E0E0F8;">
+                <p:fieldset legend="Listado de clientes" style="position: absolute; font-family: monospace; font-size: 18px; padding-bottom: 100px; text-align: center; background-color: #E0E0F8;">
                     <p:dataTable value="#{clienteManagedBean.listarCliente()}" var="item" id="tablaClientes" style="font-family: monospace;">
                         <p:column>
                             <f:facet name="header">
@@ -117,32 +117,7 @@ and open the template in the editor.
                             </f:facet>
                             <h:outputText value="#{item.direccion}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Modificar"/>
-                            </f:facet>
-                            <p:commandButton type="button" value="Modificar" onclick="PF('dlg1').show();"/>
-                        </p:column>
                        
-                        <p:dialog header="Modificar cliente" widgetVar="dlg1" modal="true" minWidth="200">
-                            <h:form id="formModificar">
-                                <p:panelGrid columns="4">
-
-                                    <p:outputLabel value="Documento"/>
-                                    <p:inputText value="#{clienteManagedBean.cliente.idCliente}"/>
-
-                                    <p:outputLabel value="Nombre"/>
-                                    <p:inputText value="#{clienteManagedBean.cliente.nombre}"/>
-
-                                    <p:outputLabel value="Teléfono"/>
-                                    <p:inputText value="#{clienteManagedBean.cliente.telefono}"/>
-
-                                    <p:outputLabel value="Dirección"/>
-                                    <p:inputText value="#{clienteManagedBean.cliente.direccion}"/>
-
-                                </p:panelGrid>
-                            </h:form>  
-                        </p:dialog>
 
                     </p:dataTable>
                 </p:fieldset>

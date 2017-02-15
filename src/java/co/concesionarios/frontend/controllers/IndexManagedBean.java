@@ -11,8 +11,8 @@ import co.concesionario.backend.persistences.facades.ConcesionarioFacadeLocal;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author camila
  */
 @Named(value = "indexManagedBean")
-@SessionScoped
+@RequestScoped
 public class IndexManagedBean implements Serializable {
     private Concesionario c;
     @EJB private ConcesionarioFacadeLocal cfl;

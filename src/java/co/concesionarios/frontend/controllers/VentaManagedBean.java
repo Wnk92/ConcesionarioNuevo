@@ -6,6 +6,7 @@
 package co.concesionarios.frontend.controllers;
 
 import co.concesionario.backend.persistences.entities.Venta;
+import co.concesionario.backend.persistences.entities.Venta_;
 import co.concesionario.backend.persistences.facades.VentaFacadeLocal;
 import co.concesionarios.frontend.utilities.converter.InterfaceManagedBean;
 import java.io.Serializable;
@@ -23,19 +24,21 @@ import javax.faces.context.FacesContext;
  */
 @Named(value = "ventaManagedBean")
 @RequestScoped
-public class VentaManagedBean implements Serializable, InterfaceManagedBean<Venta>{
+public class VentaManagedBean implements Serializable, InterfaceManagedBean<Venta> {
 
-  private Venta venta;
-  @EJB
-  private VentaFacadeLocal ventafl;
-  
-    public VentaManagedBean() {      
+    private Venta venta;
+
+    @EJB
+    private VentaFacadeLocal ventafl;
+    private List<Venta> masVendido;
+    private int idVehiculo;
+
+    public VentaManagedBean() {
     }
-   
-    
+
     @PostConstruct
-    public void init(){
-         venta = new Venta();
+    public void init() {
+        venta = new Venta();
     }
 
     @Override
@@ -43,8 +46,6 @@ public class VentaManagedBean implements Serializable, InterfaceManagedBean<Vent
         return ventafl.find(llave);
     }
 
-    
-    
     public Venta getVenta() {
         return venta;
     }
@@ -52,28 +53,37 @@ public class VentaManagedBean implements Serializable, InterfaceManagedBean<Vent
     public void setVenta(Venta venta) {
         this.venta = venta;
     }
-    
-    public void registrarVenta(){
-    
-         try {
-            
+
+    public void registrarVenta() {
+
+        try {
+
             ventafl.create(venta);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"","Venta registrada con éxito"));
-        
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Venta registrada con éxito"));
+
         } catch (Exception e) {
-       
+
         }
     }
-    
-    public void eliminarVenta(Venta v){
-    
-       ventafl.remove(v);
-        
+
+    public void eliminarVenta(Venta v) {
+
+        ventafl.remove(v);
+
     }
-    
-    public List<Venta> listarVenta(){
-    
+
+    public List<Venta> listarVenta() {
+
         return ventafl.findAll();
-    
+
+    }
+
+
+    public List<Venta> getMasVendido() {
+        return masVendido;
+    }
+
+    public void setMasVendido(List<Venta> masVendido) {
+        this.masVendido = masVendido;
     }
 }

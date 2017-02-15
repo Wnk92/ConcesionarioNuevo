@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -17,9 +18,9 @@ and open the template in the editor.
 
     </h:head>
 
-    <h:body>
+    <h:body style="background-color: #CECEF6;">
+       
         <h:form>
-
             <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
                 <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
                     <f:param name="i" value="0"/>
@@ -37,12 +38,11 @@ and open the template in the editor.
                     <f:param name="i" value="3"/>
                 </p:menuitem>
 
-                <p:menuitem value="Consultas" outcome="consultas" icon=" ui-icon-circle-zoomout" >
+                <p:menuitem value="Consultas" outcome="consultas" icon="ui-icon-circle-zoomout" >
                     <f:param name="i" value="4"/>
                 </p:menuitem>
 
-
-                <p:menuitem value="Cerrar sesión" outcome="index" icon=" ui-icon-close" >
+                <p:menuitem value="Cerrar sesión" action="#{indexManagedBean.cerrarSesion()}" icon=" ui-icon-close"  >
                     <f:param name="i" value="5"/>
                 </p:menuitem>
 
@@ -50,11 +50,10 @@ and open the template in the editor.
         </h:form>
 
 
-
         <h:form id="FormularioVenta" style="font-family: monospace; font-size: 15px; padding-top: 20px;  padding-right: 1050px; padding-bottom: 100px; position: absolute;">
             <p:growl id="growl" sticky="true" showSummary="true" showDetail="true" /> 
 
-            <p:fieldset legend="Formulario de registro de ventas" style="font-family: monospace; height: 300px;">
+            <p:fieldset legend="Formulario de registro de ventas" style="background-color: #E0E0F8; font-family: monospace; height: 300px;">
 
 
                 <h:panelGrid >
@@ -78,21 +77,21 @@ and open the template in the editor.
         
         <f:view>
 
-            <h:form style="padding-left:1150px; padding-top:57px; position: absolute;">
-                <h:commandLink>
-                    <p:graphicImage url="./../Resources/img/pdf.jpg" width="30" />
+           <h:form style="padding-left: 350px; padding-top: 35px; ;" id="FormTabVentas">
+                <h:commandLink title="Descargar tabla en pdf">
+                    <p:graphicImage url="Resources/img/pdf.png" width="30" />
                     <p:dataExporter type="pdf" target="tablaVentas" fileName="ListadoDeClientes"/>
                 </h:commandLink>
 
-                <h:commandLink>
-                    <p:graphicImage url="./../Resources/img/xls.png" width="30"/>
+                <h:commandLink title="Descargar tabla en excel">
+                    <p:graphicImage url="Resources/img/xls.png" width="30"/>
                     <p:dataExporter type="xls" target="tablaVentas" fileName="ListadoDeClientes"/>
                 </h:commandLink>
-            </h:form>
+          
 
-            <h:form style="padding-left: 350px; padding-top: 35px;" id="FormTabVentas">
+           
                 <p:fieldset legend="Listado de ventas realizadas" style=" font-size: 17px; font-family:monospace; 
-                            text-align: center;">
+                            text-align: center; background-color: #E0E0F8;">
 
                     <p:dataTable style="font-family: monospace;" value="#{ventaManagedBean.listarVenta()}" var="item" id="tablaVentas">
 
@@ -106,15 +105,15 @@ and open the template in the editor.
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Documento"/>
+                                <h:outputText value="Nombre del comprador"/>
                             </f:facet>
-                            <h:outputText value="#{item.idCliente}"/>
+                            <h:outputText value="#{item.idCliente.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="IdVehiculo"/>
+                                <h:outputText value="Nombre"/>
                             </f:facet>
-                            <h:outputText value="#{item.idVehiculo}"/>
+                            <h:outputText value="#{item.idVehiculo.nombre}"/>
                         </p:column>
                     </p:dataTable>
 

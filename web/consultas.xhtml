@@ -10,41 +10,121 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">  
     <h:head>
-        <title>TODO supply a title</title>
+        <title>Consultas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="#{indexManagedBean.verificarSesion()}"/>
     </h:head>
     <h:body>
-        <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
-            <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
-                <f:param name="i" value="0"/>
-            </p:menuitem>
-
-            <p:menuitem value="Registrar vehiculo" outcome="registrar_vehiculo" icon="ui-icon-car">
-                <f:param name="i" value="1" />
-            </p:menuitem>
-
-            <p:menuitem value="Registrar cliente" outcome="registrar_cliente" icon="ui-icon-person" >
-                <f:param name="i" value="2"/>
-            </p:menuitem>
-
-            <p:menuitem value="Registrar venta" outcome="registrar_venta" icon="ui-icon-document" >
-                <f:param name="i" value="3"/>
-            </p:menuitem>
-
-            <p:menuitem value="Consultas" outcome="consultas" icon=" ui-icon-circle-zoomout" >
-                <f:param name="i" value="4"/>
-            </p:menuitem>
-
-
-            <p:menuitem value="Cerrar sesión" outcome="index" icon=" ui-icon-close" >
-                <f:param name="i" value="5"/>
-            </p:menuitem>
-
-        </p:tabMenu>
         <h:form>
-            <h:button outcome="consultaMenorPrecio" value="Encuentra tu carro"/>
+            <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
+                <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:menuitem value="Registrar vehiculo" outcome="registrar_vehiculo" icon="ui-icon-car">
+                    <f:param name="i" value="1" />
+                </p:menuitem>
+
+                <p:menuitem value="Registrar cliente" outcome="registrar_cliente" icon="ui-icon-person" >
+                    <f:param name="i" value="2"/>
+                </p:menuitem>
+
+                <p:menuitem value="Registrar venta" outcome="registrar_venta" icon="ui-icon-document" >
+                    <f:param name="i" value="3"/>
+                </p:menuitem>
+
+                <p:menuitem value="Consultas" outcome="consultas" icon="ui-icon-circle-zoomout" >
+                    <f:param name="i" value="4"/>
+                </p:menuitem>
+
+                <p:menuitem value="Cerrar sesión" action="#{indexManagedBean.cerrarSesion()}" icon=" ui-icon-close"  >
+                    <f:param name="i" value="5"/>
+                </p:menuitem>
+
+            </p:tabMenu>
         </h:form>
-        
-       
+        <br/>
+        <h:form>
+
+
+            <p:button style="font-family: monospace; font-size: 18px;" icon="ui-icon-circle-arrow-e" outcome="consultaMayorPrecio" value="Consulta siguiente"/>
+
+        </h:form>
+        <br/>
+
+        <p:fieldset style="background-color: #E0E0F8; font-family: monospace; font-size: 18px;" legend="Haga click para conocer el vehículo más económico de nuestra red">
+
+            <h:form>
+
+                <p:column>
+
+                    <h:commandButton style="font-family: monospace; font-size: 18px;" value="Buscar" actionListener="#{buscarManagedBean.consultar()}"/>   
+
+                </p:column>
+
+
+
+            </h:form>
+
+        </p:fieldset>
+
+
+
+        <br/>
+
+        <f:view>
+
+            <h:form style="padding-left: 130px;">
+                <h:commandLink title="Descargar tabla en pdf">
+                    <p:graphicImage url="Resources/img/pdf.png" width="30"/>
+                    <p:dataExporter type="pdf" target="tablaConsulta" fileName="ListadoDeVehiculos"/>
+                </h:commandLink>
+
+                <h:commandLink title="Descargar tabla en excel">
+                    <p:graphicImage url="Resources/img/xls.png" width="30"/>
+                    <p:dataExporter type="xls" target="tablaConsulta" fileName="ListadoDeVehiculosv" />
+                </h:commandLink>
+
+                <p:dataTable id="tablaConsulta" value="#{buscarManagedBean.filtroVehiculo}" var="item" style="font-family: monospace; font-size: 20px; width: 1000px;" >
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Marca"/>
+
+                        </f:facet>
+
+                        <p:outputLabel value="#{item.marca}" style="font-family: monospace; font-size: 18px;"/>
+
+                    </p:column>
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Modelo"/>
+
+                        </f:facet>
+
+                        <p:outputLabel value="#{item.modelo}" style="font-family: monospace; font-size: 18px;"/>
+
+                    </p:column>
+
+                    <p:column>
+
+                        <f:facet name="header">
+
+                            <h:outputText value="Precio"/>
+
+                        </f:facet>
+
+                        <p:outputLabel value="#{item.precio}" style="font-family: monospace; font-size: 18px;"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+        </f:view>
+
     </h:body>
 </html>

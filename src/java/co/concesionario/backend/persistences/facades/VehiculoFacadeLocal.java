@@ -30,6 +30,11 @@ public interface VehiculoFacadeLocal {
 
     int count();
     
-    List<Vehiculo> consultaMenorPrecio(int precio);
+    List<Vehiculo> consultaVehiculo(int precio);
+    
+    List<Vehiculo> buscar(int codigoVehiculo) throws Exception;
+    
+    List<Vehiculo> consultaVehiculo2(int precio);
+    
     
 }

@@ -17,7 +17,8 @@ and open the template in the editor.
 
     </h:head>
 
-    <h:body>
+    <h:body style="background-color: #CECEF6;">
+
         <h:form>
             <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
                 <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
@@ -36,87 +37,114 @@ and open the template in the editor.
                     <f:param name="i" value="3"/>
                 </p:menuitem>
 
-                <p:menuitem value="Consultas" outcome="registrar_venta" icon=" ui-icon-circle-zoomout" >
+                <p:menuitem value="Consultas" outcome="consultas" icon="ui-icon-circle-zoomout" >
                     <f:param name="i" value="4"/>
                 </p:menuitem>
 
-
-                <p:menuitem value="Cerrar sesión" outcome="index" icon=" ui-icon-close" >
+                <p:menuitem value="Cerrar sesión" action="#{indexManagedBean.cerrarSesion()}" icon=" ui-icon-close"  >
                     <f:param name="i" value="5"/>
                 </p:menuitem>
 
             </p:tabMenu>
         </h:form>
 
-        
-            <h:form id="formularioCliente" style="font-family: monospace; font-size: 15px; padding-top: 20px;  padding-right: 1050px; padding-bottom: 100px; position: absolute;">
-                <p:growl id="growl" sticky="true" showSummary="true" showDetail="true" /> 
 
-                <p:fieldset legend="Formulario de registro" style="font-family: monospace; height: 300px;">
+        <h:form id="formularioCliente" style="font-family: monospace; font-size: 15px; padding-top: 20px;  padding-right: 1050px; position: absolute;">
+            <p:growl id="growl" sticky="true" showSummary="true" showDetail="true" /> 
 
-                    <h:panelGrid>
-                        <p:outputLabel value="Documento" for="idCliente" style="font-family: monospace;"/>
-                        <p:inputText  style="font-family: monospace;" id="idCliente" value="#{clienteManagedBean.cliente.idCliente}" title="IdCliente" required="true" requiredMessage="Campo requerido"/>
+            <p:fieldset legend="Formulario de registro" style="font-family: monospace; height: 300px; background-color: #E0E0F8;">
 
-                        <p:outputLabel value="Nombre:" for="nombre"  style="font-family: monospace;" />
-                        <p:inputText  style="font-family: monospace;" id="nombre" value="#{clienteManagedBean.cliente.nombre}" title="Nombre" required="true" requiredMessage="Campo requerido"/>
+                <h:panelGrid>
+                    <p:outputLabel value="Documento" for="idCliente" style="font-family: monospace;"/>
+                    <p:inputText  style="font-family: monospace;" id="idCliente" value="#{clienteManagedBean.cliente.idCliente}" title="IdCliente" required="true" requiredMessage="Campo requerido"/>
 
-                        <p:outputLabel value="Teléfono:" for="telefono"  style="font-family: monospace;" />
-                        <p:inputText  style="font-family: monospace;" id="telefono" value="#{clienteManagedBean.cliente.telefono}" title="Telefono" required="true" requiredMessage="Campo requerido"/>
+                    <p:outputLabel value="Nombre:" for="nombre"  style="font-family: monospace;" />
+                    <p:inputText  style="font-family: monospace;" id="nombre" value="#{clienteManagedBean.cliente.nombre}" title="Nombre" required="true" requiredMessage="Campo requerido"/>
 
-                        <p:outputLabel value="Dirección:" for="direccion"  style="font-family: monospace;" />
-                        <p:inputText  style="font-family: monospace;" id="direccion" value="#{clienteManagedBean.cliente.direccion}" title="Direccion" required="true" requiredMessage="Campo requerido"/>
+                    <p:outputLabel value="Teléfono:" for="telefono"  style="font-family: monospace;" />
+                    <p:inputText  style="font-family: monospace;" id="telefono" value="#{clienteManagedBean.cliente.telefono}" title="Telefono" required="true" requiredMessage="Campo requerido"/>
 
-                    </h:panelGrid>
-                    <p:commandButton style="font-family: monospace;" value="Registrar" actionListener="#{clienteManagedBean.registrarCliente()}" update="growl, :FormTabCliente" icon="ui-icon-check"/>
+                    <p:outputLabel value="Dirección:" for="direccion"  style="font-family: monospace;" />
+                    <p:inputText  style="font-family: monospace;" id="direccion" value="#{clienteManagedBean.cliente.direccion}" title="Direccion" required="true" requiredMessage="Campo requerido"/>
 
-                </p:fieldset>
-            </h:form>
-      
+                </h:panelGrid>
+                <p:commandButton style="font-family: monospace;" value="Registrar" actionListener="#{clienteManagedBean.registrarCliente()}" update="growl, :FormTabCliente" icon="ui-icon-check"/>
+
+            </p:fieldset>
+        </h:form>
+
 
         <f:view>
 
 
-           <h:form style="padding-left:1150px; padding-top:60px; position: absolute;">
-               <h:commandLink title="Descargar tabla en pdf">
-                    <p:graphicImage url="./../Resources/img/pdf.jpg" width="30"/>
+            <h:form style="padding-left: 280px; position: relative;" id="FormTabCliente">
+
+                <h:commandLink title="Descargar tabla en pdf">
+                    <p:graphicImage url="Resources/img/pdf.png" width="30"/>
                     <p:dataExporter type="pdf" target="tablaClientes" fileName="ListadoDeClientes"/>
                 </h:commandLink>
 
-               <h:commandLink title="Descargar tabla en excel">
-                    <p:graphicImage url="./../Resources/img/xls.png" width="30"/>
+                <h:commandLink title="Descargar tabla en excel">
+                    <p:graphicImage url="Resources/img/xls.png" width="30"/>
                     <p:dataExporter type="xls" target="tablaClientes" fileName="ListadoDeClientes"/>
                 </h:commandLink>
-            </h:form>
-          
-            <h:form style="padding-left: 280px; padding-top: 35px;" id="FormTabCliente">
-                <p:fieldset legend="Listado de clientes" style="font-family: monospace; font-size: 18px; text-align: center;">
-                <p:dataTable value="#{clienteManagedBean.listarCliente()}" var="item" id="tablaClientes" style="font-family: monospace;">
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Documento"/>
-                        </f:facet>
-                        <h:outputText value="#{item.idCliente}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Nombre"/>
-                        </f:facet>
-                        <h:outputText value="#{item.nombre}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Teléfono"/>
-                        </f:facet>
-                        <h:outputText value="#{item.telefono}"/>
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Dirección"/>
-                        </f:facet>
-                        <h:outputText value="#{item.direccion}"/>
-                    </p:column>
-                </p:dataTable>
+
+
+
+                <p:fieldset legend="Listado de clientes" style="font-family: monospace; font-size: 18px; padding-bottom: 100px; text-align: center; background-color: #E0E0F8;">
+                    <p:dataTable value="#{clienteManagedBean.listarCliente()}" var="item" id="tablaClientes" style="font-family: monospace;">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Documento"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idCliente}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Teléfono"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefono}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Dirección"/>
+                            </f:facet>
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Modificar"/>
+                            </f:facet>
+                            <p:commandButton type="button" value="Modificar" onclick="PF('dlg1').show();"/>
+                        </p:column>
+                       
+                        <p:dialog header="Modificar cliente" widgetVar="dlg1" modal="true" minWidth="200">
+                            <h:form id="formModificar">
+                                <p:panelGrid columns="4">
+
+                                    <p:outputLabel value="Documento"/>
+                                    <p:inputText value="#{clienteManagedBean.cliente.idCliente}"/>
+
+                                    <p:outputLabel value="Nombre"/>
+                                    <p:inputText value="#{clienteManagedBean.cliente.nombre}"/>
+
+                                    <p:outputLabel value="Teléfono"/>
+                                    <p:inputText value="#{clienteManagedBean.cliente.telefono}"/>
+
+                                    <p:outputLabel value="Dirección"/>
+                                    <p:inputText value="#{clienteManagedBean.cliente.direccion}"/>
+
+                                </p:panelGrid>
+                            </h:form>  
+                        </p:dialog>
+
+                    </p:dataTable>
                 </p:fieldset>
             </h:form>
         </f:view>

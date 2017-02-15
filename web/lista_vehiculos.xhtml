@@ -10,76 +10,77 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <f:event type="preRenderView" listener="#{indexManagedBean.verificarSesion()}"/>
     </h:head>
-    <h:body>
+    <h:body style="background-color: #CECEF6;">
 
+        <h:form>
+            <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
+                <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
 
-        <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
-            <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
-                <f:param name="i" value="0"/>
-            </p:menuitem>
+                <p:menuitem value="Registrar vehiculo" outcome="registrar_vehiculo" icon="ui-icon-car">
+                    <f:param name="i" value="1" />
+                </p:menuitem>
 
-            <p:menuitem value="Registrar vehiculo" outcome="registrar_vehiculo" icon="ui-icon-car">
-                <f:param name="i" value="1" />
-            </p:menuitem>
+                <p:menuitem value="Registrar cliente" outcome="registrar_cliente" icon="ui-icon-person" >
+                    <f:param name="i" value="2"/>
+                </p:menuitem>
 
-            <p:menuitem value="Registrar cliente" outcome="registrar_cliente" icon="ui-icon-person" >
-                <f:param name="i" value="2"/>
-            </p:menuitem>
+                <p:menuitem value="Registrar venta" outcome="registrar_venta" icon="ui-icon-document" >
+                    <f:param name="i" value="3"/>
+                </p:menuitem>
 
-            <p:menuitem value="Registrar venta" outcome="registrar_venta" icon="ui-icon-document" >
-                <f:param name="i" value="3"/>
-            </p:menuitem>
+                <p:menuitem value="Consultas" outcome="consultas" icon="ui-icon-circle-zoomout" >
+                    <f:param name="i" value="4"/>
+                </p:menuitem>
 
-            <p:menuitem value="Consultas" outcome="consultas" icon="ui-icon-circle-zoomout" >
-                <f:param name="i" value="4"/>
-            </p:menuitem>
+                <p:menuitem value="Cerrar sesión" action="#{indexManagedBean.cerrarSesion()}" icon=" ui-icon-close"  >
+                    <f:param name="i" value="5"/>
+                </p:menuitem>
 
-
-            <p:menuitem value="Cerrar sesión" outcome="index" icon=" ui-icon-close"  >
-                <f:param name="i" value="5"/>
-            </p:menuitem>
-
-        </p:tabMenu>
-
+            </p:tabMenu>
+        </h:form>
         <f:view>
 
 
-            <h:form style="padding-left:1150px; padding-top:60px; position: absolute;">
-                <h:commandLink title="Descargar tabla en pdf">
-                    <p:graphicImage url="./../Resources/img/pdf.jpg" width="30"/>
+            <h:form>
+                <h:commandLink title="Descargar tabla en pdf" style="padding-top: 10px; padding-left: 1100px; position: absolute;">
+                    <p:graphicImage url="Resources/img/pdf.png" width="30"/>
                     <p:dataExporter type="pdf" target="tablaVehiculos" fileName="ListadoDeVehiculos"/>
                 </h:commandLink>
 
-                <h:commandLink title="Descargar tabla en Excel">
-                    <p:graphicImage url="./../Resources/img/xls.png" width="30"/>
+                <h:commandLink title="Descargar tabla en Excel" style= "padding-left: 1130px; position: static;">
+                    <p:graphicImage url="Resources/img/xls.png" width="30"/>
                     <p:dataExporter type="xls" target="tablaVehiculos" fileName="ListadoDeVehiculos"/>
                 </h:commandLink>
-            </h:form>
 
-            <h:form style="padding-top: 20px;">
-                <p:fieldset legend="Listado de vehículos" style="font-family:monospace; font-size: 25px; text-align: center;">
-                    
-                    <p:dataTable value="#{vehiculoManagedBean.listarVehiculo()}" var="item" id="tablaVehiculos" style="width:1100px; padding-left:90px; font-family: initial; font-size: 20px;">
 
-                        <p:column>
+                <p:fieldset legend="Listado de vehículos" style="background-color: #E0E0F8; font-family:monospace; font-size: 25px; text-align: center;">
+
+                    <p:dataTable emptyMessage="Sin coincidencias" filteredValue="#{buscarManagedBean.filtroVehiculo}" value="#{vehiculoManagedBean.listarVehiculo()}" var="item" id="tablaVehiculos" style="width:1100px; padding-left:90px; font-family: initial; font-size: 20px;">
+
+                        <p:column filterBy="#{item.marca}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Marca" />
                             </f:facet>
                             <h:outputText value="#{item.marca}"/>
                         </p:column>
-                        <p:column>
+                        
+                        <p:column filterBy="#{item.modelo}" filterMatchMode="contains"> 
                             <f:facet name="header">
                                 <h:outputText value="Modelo"/>
                             </f:facet>
                             <h:outputText value="#{item.modelo}"/>
                         </p:column>
-                        <p:column>
+                        
+                        <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Nombre"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
-                        <p:column>
+                        
+                        <p:column filterBy="#{item.precio}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Precio"/>
                             </f:facet>

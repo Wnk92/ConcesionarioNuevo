@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+
+    <h:head>
+        <title>Consultas</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="#{indexManagedBean.verificarSesion()}"/>
+    </h:head>
+    <h:body style="background-color: #CECEF6;">
+        
+        <h:form>
+            <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
+                <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
+                    <f:param name="i" value="0"/>
+                </p:menuitem>
+
+                <p:menuitem value="Registrar vehiculo" outcome="registrar_vehiculo" icon="ui-icon-car">
+                    <f:param name="i" value="1" />
+                </p:menuitem>
+
+                <p:menuitem value="Registrar cliente" outcome="registrar_cliente" icon="ui-icon-person" >
+                    <f:param name="i" value="2"/>
+                </p:menuitem>
+
+                <p:menuitem value="Registrar venta" outcome="registrar_venta" icon="ui-icon-document" >
+                    <f:param name="i" value="3"/>
+                </p:menuitem>
+
+                <p:menuitem value="Consultas" outcome="consultas" icon="ui-icon-circle-zoomout" >
+                    <f:param name="i" value="4"/>
+                </p:menuitem>
+
+                <p:menuitem value="Cerrar sesión" action="#{indexManagedBean.cerrarSesion()}" icon=" ui-icon-close"  >
+                    <f:param name="i" value="5"/>
+                </p:menuitem>
+
+            </p:tabMenu>
+        </h:form>
+        <br/>
+
+        <h:form>
+            <h:panelGrid columns="2" >
+                <p:button icon="ui-icon-circle-arrow-w" value="Atrás" outcome="consultas"  style="font-family: monospace; font-size: 18px;"/>
+                <p:button icon="ui-icon-circle-arrow-e" outcome="consultaMasVendido" value="Siguiente consulta"  style="font-family: monospace; font-size: 18px;"/>
+
+            </h:panelGrid>
+        </h:form>
+        <br/>
+        <div class="container-fluid">
+
+            <h:form>
+
+                <p:fieldset style="background-color: #E0E0F8; font-size: 18px; font-family: monospace;" legend="Digite un valor para conocer los vehículos con un precio superior"/>
+
+                <p:inputText value="#{vehiculoManagedBean.precio}" style="font-size: 18px; font-family: monospace;"/>
+
+                <p:column>
+
+                    <h:commandButton style="font-size: 18px; font-family: monospace;" value="Buscar" actionListener="#{vehiculoManagedBean.consultarPrecio()}"/>   
+
+                </p:column>
+
+            </h:form>
+            <br/>
+            <f:view>
+                <h:form style="position: absolute;">
+                    <h:commandLink title="Descargar tabla en pdf">
+                        <p:graphicImage url="Resources/img/pdf.png" width="30"/>
+                        <p:dataExporter type="pdf" target="tablaPrecio" fileName="ListadoDeVehiculos"/>
+                    </h:commandLink>
+
+                    <h:commandLink title="Descargar tabla en excel">
+                        <p:graphicImage url="Resources/img/xls.png" width="30"/>
+                        <p:dataExporter type="xls" target="tablaPrecio" fileName="ListadoDeVehiculosv" />
+                    </h:commandLink>
+
+
+                    <br/>
+                    <br/>
+
+                    <p:dataTable id="tablaPrecio" style="font-size: 20px; font-family: monospace;" value="#{vehiculoManagedBean.pruebaCon}" var="item" >
+
+                        <p:column>
+
+                            <f:facet name="header">
+
+                                <h:outputText value="Marca"/>
+
+                            </f:facet>
+
+                            <p:outputLabel value="#{item.marca}"  style="font-family: monospace; font-size: 18px;"/>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <f:facet name="header">
+
+                                <h:outputText value="Nombre"/>
+
+                            </f:facet>
+
+                            <p:outputLabel value="#{item.nombre}"  style="font-family: monospace; font-size: 18px;"/>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <f:facet name="header">
+
+                                <h:outputText value="Modelo"/>
+
+                            </f:facet>
+
+                            <p:outputLabel value="#{item.modelo}"  style="font-family: monospace; font-size: 18px;"/>
+
+                        </p:column>
+
+                        <p:column>
+
+                            <f:facet name="header">
+
+                                <h:outputText value="Precio"  style="font-family: monospace; font-size: 18px;"/>
+
+                            </f:facet>
+
+                            <p:outputLabel value="#{item.precio}" style="font-size: 18px; font-family: monospace;"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+            </f:view>
+
+        </div>
+
+
+
+    </h:body>
+</html>

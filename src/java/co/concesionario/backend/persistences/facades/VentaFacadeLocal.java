@@ -30,4 +30,6 @@ public interface VentaFacadeLocal {
 
     int count();
     
+    List<Venta> mayorVenta();
+    
 }

@@ -12,82 +12,65 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author camila
  */
 @Named(value = "indexManagedBean")
-@ViewScoped
+@SessionScoped
 public class IndexManagedBean implements Serializable {
-
-    private Concesionario concesionario;
-    @EJB
-    private ConcesionarioFacadeLocal concesionariofl;
-   
-    public IndexManagedBean() {
-    }
+    private Concesionario c;
+    @EJB private ConcesionarioFacadeLocal cfl;
     
-    @PostConstruct 
+    @PostConstruct
     public void init(){
+        c = new Concesionario();
+    }
+
+    public Concesionario getC() {
+        return c;
+    }
+
+    public void setC(Concesionario c) {
+        this.c = c;
+    }
     
-        concesionario = new Concesionario();
-        
-        
-        }
-
-    public Concesionario getConcesionario() {
-        return concesionario;
-    }
-
-    public void setConcesionario(Concesionario concesionario) {
-        this.concesionario = concesionario;
-    }
-                
-          public String iniciarSesion(){
-        Concesionario con;
-        String redireccion = null;
-        
-        try {
-           con = concesionariofl.iniciarSesion(concesionario);
-            if (con != null){
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("concesionario",con);
-            redireccion = "lista_vehiculos";
-            }else{
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Aviso","Valores Incorrectos"));
-
+    public String iniciarSesion(){
+        try{
+            Concesionario i = cfl.iniciarSesion(c);
+            if(i!=null){
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", i);
+                return "/lista_vehiculos.xhtml?faces-redirect=true";
             }
-            
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Aviso","Error"));
+            i = null;
+        }catch(Exception e){
         }
-    return redireccion;
-    
-          }
-          
-          public void verificarSesion(){
-          
-              try {
-                  FacesContext context = FacesContext.getCurrentInstance();
-                  
-                  Concesionario con = (Concesionario)context.getExternalContext().getSessionMap().get("concesionario");
-                if (con == null)
-                {context.getExternalContext().redirect("permisos.xhtml");}
-                  
-              } catch (Exception e) {
-              }
-          
-          }
-    
-          public void cerrarSesion(){
-          
-             
-              FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-          
-          }
+        c= null;
+                
+            return null;
     }
-
+    
+    public void verificarSesion(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(context.getExternalContext().getSessionMap().get("usuario")==null){
+            HttpServletRequest r = (HttpServletRequest) context.getExternalContext().getRequest();
+            try{
+                context.getExternalContext().redirect(r.getContextPath() + "/index.xhtml");
+            }catch(Exception e){
+            }
+        }
+    }
+    
+    public String cerrarSesion(){
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().remove("usuario");
+        context.getExternalContext().invalidateSession();
+        c = null;
+        return "/index.xhtml?faces-redirect=true";  
+    }
+}

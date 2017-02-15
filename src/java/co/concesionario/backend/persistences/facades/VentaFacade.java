@@ -6,9 +6,13 @@
 package co.concesionario.backend.persistences.facades;
 
 import co.concesionario.backend.persistences.entities.Venta;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+
 
 /**
  *
@@ -28,6 +32,13 @@ public class VentaFacade extends AbstractFacade<Venta> implements VentaFacadeLoc
     public VentaFacade() {
         super(Venta.class);
     }
-    
-    
+
+    @Override
+    public List<Venta> mayorVenta() {
+        String sql = "select fecha from Ventas where id_venta = 1";
+        Query q = em.createNativeQuery(sql);
+        List<Venta> venta = q.getResultList();
+        return venta;
+    }
+
 }

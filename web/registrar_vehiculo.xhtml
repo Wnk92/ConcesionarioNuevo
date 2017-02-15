@@ -17,7 +17,8 @@ and open the template in the editor.
 
     </h:head>
 
-    <h:body>
+    <h:body style="background-color: #CECEF6;">
+        
         <h:form>
             <p:tabMenu activeIndex="#{param.i}" style="font-family: monospace; font-size: 18px;">
                 <p:menuitem value="Inicio" outcome="lista_vehiculos" icon="ui-icon-home" >
@@ -36,52 +37,52 @@ and open the template in the editor.
                     <f:param name="i" value="3"/>
                 </p:menuitem>
 
-                <p:menuitem value="Consultas" outcome="consultas" icon=" ui-icon-circle-zoomout" >
+                <p:menuitem value="Consultas" outcome="consultas" icon="ui-icon-circle-zoomout" >
                     <f:param name="i" value="4"/>
                 </p:menuitem>
 
-
-                <p:menuitem value="Cerrar sesión" outcome="index" icon=" ui-icon-close" >
+                <p:menuitem value="Cerrar sesión" action="#{indexManagedBean.cerrarSesion()}" icon=" ui-icon-close"  >
                     <f:param name="i" value="5"/>
                 </p:menuitem>
 
             </p:tabMenu>
         </h:form>
-
+        <br/>
         <br/>
         <f:view>
-      
-            <h:form id="formularioVehiculo" style="font-size: 22px;">
-            <p:growl id="growl" sticky="true" showSummary="true" showDetail="true" />  
-            <p:fieldset legend="Registrar vehículo" style="font-family:monospace;">
-                <h:panelGrid style="font-family: monospace; background-image: url(./../Resources/img/carro.jpg); width:100%; height:450px;">
-                    
-                    <p:outputLabel value="Marca:" for="marca" style="font-size:20px; font-family: monospace;" />
-                    <p:inputText style="font-size:20px;" id="marca" value="#{vehiculoManagedBean.vehiculo.marca}" title="Marca" required="true" requiredMessage="Debes registrar la marca del vehículo"/>
 
-                    <p:outputLabel value="Modelo:" for="modelo" style="font-size:20px; font-family: monospace;"/>
-                    <p:inputText style="font-size:20px;  font-family: monospace;" id="modelo" value="#{vehiculoManagedBean.vehiculo.modelo}" title="Modelo" required="true" requiredMessage="Debes registrar el modelo del vehículo"/>
+            <h:form id="formularioVehiculo" style="font-size: 22px; padding-left: 250px;">
+                <p:growl id="growl" sticky="true" showSummary="true" showDetail="true" />  
+            
+                <p:fieldset legend="Registrar vehículo" style="font-family:monospace; background-image: url(Resources/img/auto.png); width: 750px;">
+                    <h:panelGrid style="font-family: monospace;">
 
-                    <p:outputLabel value="Nombre:" for="nombre" style="font-size:20px; font-family: monospace;"/>
-                    <p:inputText style="font-size:20px; font-family: monospace;" id="nombre" value="#{vehiculoManagedBean.vehiculo.nombre}" title="Nombre" required="true" requiredMessage="Desbes registrar el nombre del vehículo"/>
+                        <p:outputLabel value="Marca:" for="marca" style="font-size:20px; font-family: monospace;" />
+                        <p:inputText style="font-size:20px;" id="marca" value="#{vehiculoManagedBean.vehiculo.marca}" title="Marca" required="true" requiredMessage="Debes registrar la marca del vehículo"/>
 
-                    <p:outputLabel value="Precio:" for="precio" style="font-size:20px; font-family: monospace;"/>
-                    <p:inputText style="font-size:20px; font-family: monospace;" id="precio" value="#{vehiculoManagedBean.vehiculo.precio}" title="Precio" required="true" requiredMessage="Debes registrar el precio del vehículo"/>
+                        <p:outputLabel value="Modelo:" for="modelo" style="font-size:20px; font-family: monospace;"/>
+                        <p:inputText style="font-size:20px;  font-family: monospace;" id="modelo" value="#{vehiculoManagedBean.vehiculo.modelo}" title="Modelo" required="true" requiredMessage="Debes registrar el modelo del vehículo"/>
 
-                    <p:outputLabel value="CodigoConcesionario:" for="codigoConcesionario" style="font-size:20px;" />
+                        <p:outputLabel value="Nombre:" for="nombre" style="font-size:20px; font-family: monospace;"/>
+                        <p:inputText style="font-size:20px; font-family: monospace;" id="nombre" value="#{vehiculoManagedBean.vehiculo.nombre}" title="Nombre" required="true" requiredMessage="Desbes registrar el nombre del vehículo"/>
 
-                    <p:selectOneMenu style="font-size:20px; font-family: monospace;" id="codigoConcesionario" value="#{vehiculoManagedBean.vehiculo.codigoConcesionario}" required="true" requiredMessage="The CodigoConcesionario field is required.">
-                        <f:selectItems  value="#{concesionarioManagedBean.listarConcesionario()}" var="listaConc" itemLabel="#{listaConc.nombre}"/>
-                    </p:selectOneMenu>
+                        <p:outputLabel value="Precio:" for="precio" style="font-size:20px; font-family: monospace;"/>
+                        <p:inputText style="font-size:20px; font-family: monospace;" id="precio" value="#{vehiculoManagedBean.vehiculo.precio}" title="Precio" required="true" requiredMessage="Debes registrar el precio del vehículo"/>
 
-                </h:panelGrid>
-                <br/>
-                <p:commandButton style="font-size:20px; font-family: monospace;" icon="ui-icon-check" value="Listo" update=":formularioVehiculo, growl" actionListener="#{vehiculoManagedBean.registrarVehiculo()}"/>
+                        <p:outputLabel value="Concesionario:" for="codigoConcesionario" style="font-size:20px;" />
 
-            </p:fieldset>
+                        <p:selectOneMenu style="font-size:20px; font-family: monospace;" id="codigoConcesionario" value="#{vehiculoManagedBean.vehiculo.codigoConcesionario}" required="true" requiredMessage="The CodigoConcesionario field is required.">
+                            <f:selectItems  value="#{concesionarioManagedBean.listarConcesionario()}" var="listaConc" itemLabel="#{listaConc.nombre}"/>
+                        </p:selectOneMenu>
 
-        </h:form>
-</f:view>
+                    </h:panelGrid>
+                    <br/>
+                    <p:commandButton style="font-size:20px; font-family: monospace;" icon="ui-icon-check" value="Listo" update=":formularioVehiculo, growl" actionListener="#{vehiculoManagedBean.registrarVehiculo()}"/>
+
+                </p:fieldset>
+
+            </h:form>
+        </f:view>
 
 
     </h:body>

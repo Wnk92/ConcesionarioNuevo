@@ -29,7 +29,7 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
     @EJB
     private VehiculoFacadeLocal vehiculofl;
     private int precio;
-    private List<Vehiculo> consulMenorPrecio;
+    private List<Vehiculo> pruebaCon;
 
     public VehiculoManagedBean() {
     }
@@ -40,7 +40,8 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
         vehiculo = new Vehiculo();
 
     }
- public Vehiculo getVehiculo() {
+
+    public Vehiculo getVehiculo() {
         return vehiculo;
     }
 
@@ -56,53 +57,49 @@ public class VehiculoManagedBean implements Serializable, InterfaceManagedBean<V
         this.precio = precio;
     }
 
-    public List<Vehiculo> getMenorPrecio() {
-        return consulMenorPrecio;
+    public List<Vehiculo> getPruebaCon() {
+        return pruebaCon;
     }
 
-    public void setMenorPrecio(List<Vehiculo> menorPrecio) {
-        this.consulMenorPrecio = menorPrecio;
+    public void setPruebaCon(List<Vehiculo> pruebaCon) {
+        this.pruebaCon = pruebaCon;
     }
-    
+
     
     @Override
     public Vehiculo getObjectByKey(Integer llave) {
         return vehiculofl.find(llave);
     }
 
-   
-
     public void registrarVehiculo() {
 
         try {
-            
+
             vehiculofl.create(vehiculo);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"","Vehículo registrado con éxito"));
-        
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Vehículo registrado con éxito"));
+
         } catch (Exception e) {
-       
+
         }
-             
-       
 
     }
 
-    
     public List<Vehiculo> listarVehiculo() {
 
         return vehiculofl.findAll();
 
     }
-    
+
     public void eliminarVehiculo(Vehiculo ve) {
 
         vehiculofl.remove(ve);
 
     }
-    
-    public void menorPrecio(){
-    
-   consulMenorPrecio = vehiculofl.consultaMenorPrecio(precio);
-        
+    public void consultarPrecio(){
+
+        pruebaCon = vehiculofl.consultaVehiculo(precio);
+
     }
+
+
 }

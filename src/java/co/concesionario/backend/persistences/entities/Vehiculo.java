@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Vehiculo.findByMarca", query = "SELECT v FROM Vehiculo v WHERE v.marca = :marca"),
     @NamedQuery(name = "Vehiculo.findByModelo", query = "SELECT v FROM Vehiculo v WHERE v.modelo = :modelo"),
     @NamedQuery(name = "Vehiculo.findByNombre", query = "SELECT v FROM Vehiculo v WHERE v.nombre = :nombre"),
-    @NamedQuery(name = "Vehiculo.menorPrecio", query = "SELECT v FROM Vehiculo V WHERE v.precio < :precio"),
+    @NamedQuery(name = "Vehiculo.consultaPrecio", query = "SELECT v FROM Vehiculo V WHERE v.precio > :precio"),
+    @NamedQuery(name = "Vehiculo.consultaPrecio2", query = "SELECT v FROM Vehiculo V WHERE v.precio < :precio"),    
     @NamedQuery(name = "Vehiculo.findByPrecio", query = "SELECT v FROM Vehiculo v WHERE v.precio = :precio")})
 
 public class Vehiculo implements Serializable, DTO {

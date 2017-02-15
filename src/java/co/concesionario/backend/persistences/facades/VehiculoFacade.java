@@ -10,6 +10,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -31,8 +33,36 @@ public class VehiculoFacade extends AbstractFacade<Vehiculo> implements Vehiculo
     }
 
     @Override
-    public List<Vehiculo> consultaMenorPrecio(int precio) {
-return em.createNamedQuery("Vehiculo.menorPrecio").setParameter("precio", precio).getResultList();
+    public List<Vehiculo> consultaVehiculo(int precio) {
+
+        return em.createNamedQuery("Vehiculo.consultaPrecio").setParameter("precio", precio).getResultList();
+
+    }
+
+    @Override
+    public List<Vehiculo> consultaVehiculo2(int precio) {
+        return em.createNamedQuery("Vehiculo.consultaPrecio2").setParameter("precio", precio).getResultList();
+    }
+
+    @Override
+    public List<Vehiculo> buscar(int codigoVehiculo) throws Exception {
+
+        List<Vehiculo> list;
+        try {
+            String jpql = "FROM Vehiculo v WHERE v.codigoVehiculo = ?1";
+            Query query = em.createQuery(jpql);
+            query.setParameter(1, codigoVehiculo);
+
+            list = query.getResultList();
+
+        } catch (Exception e) {
+
+            throw e;
         }
+        return list;
+    }
+
+
     
+
 }
